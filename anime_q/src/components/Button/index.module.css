@@ -1,0 +1,37 @@
+.button {
+    height: 32px;
+    width: 10rem;
+
+    border-radius: 25px;
+    border: none;
+
+	cursor: pointer;
+	background: #A6A1CA;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: Josefin Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.4rem;
+
+    color: #331CC3;
+}
+
+.button:hover {
+    background: rgb(184, 178, 230);
+    color: #4225ff;
+}
+
+.button:active {
+    color: #331CC3;
+    background: #A6A1CA;
+}
+
+.button[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}

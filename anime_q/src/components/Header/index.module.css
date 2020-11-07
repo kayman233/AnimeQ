@@ -1,0 +1,20 @@
+
+.header {
+    height: 7%;
+    width: 100%;
+
+    position: fixed;
+    left: 0px;
+    top: 0px;
+
+    background: #CFC8FF;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 2.2rem;
+    color: #331CC4;
+}

@@ -1,0 +1,50 @@
+.profile_menu {
+    margin-right: 2%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    cursor: pointer;
+}
+
+.profile:after {
+    content: "\f107";
+    font-family: FontAwesome;
+}
+
+.profile_name {
+    right: 0;
+}
+
+.avatar {
+    margin: 0 5%;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.submenu {
+    list-style: none;
+    margin: 0;
+    background: #CFC8FF;
+    position: absolute;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    width: 5%;
+    transform: scaleY(0);
+    transform-origin: 0 0;
+    transition: .5s ease-in-out;
+}
+
+.profile:hover + .submenu, .submenu:hover{
+    visibility: visible;
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+img:hover {
+    cursor: pointer;
+}
