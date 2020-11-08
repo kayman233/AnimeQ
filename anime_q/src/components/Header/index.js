@@ -3,9 +3,9 @@ import styles from './index.module.css'
 import LoggedNav from './LoggedNav/index.js'
 import UnloggedNav from './UnloggedNav/index.js'
 
-function Header() {
+function Header(props) {
     const profileName = 'kayman233'
-    let isLogged = false;
+    let isLogged = props.isLogged;
     let nav;
     if (isLogged) {
         nav = <LoggedNav name={profileName}/>

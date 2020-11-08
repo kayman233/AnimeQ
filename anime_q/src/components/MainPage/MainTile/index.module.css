@@ -1,0 +1,97 @@
+.tile {
+    height: 27vh;
+    background: #bfbadb;
+    border-radius: 25px;
+    margin-top: 3vh;
+    width: 72vw;
+
+    display: flex;
+}
+
+.anime_info {
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.anime_img {
+    width: 7vw;
+    height: 20vh;
+    border: 3px solid #331CC4;
+    border-radius: 5px;
+    margin: 0 2vw;
+}
+
+.anime_description {
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.anime_name {
+    font-size: 2rem;
+    margin: 0;
+    color: #241A5E;
+}
+
+.episode_num {
+    font-size: 1.5rem;
+    color: #4729FF;
+}
+
+.views {
+    display: flex;
+    align-items: center;
+}
+
+.rank {
+    height: 3.5vw;
+    width: 3.5vw;
+    background:#FEF1B0;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank_text {
+    text-align: center;
+    font-size: .5rem;
+}
+
+.watching_text {
+    margin-left: 0.5vw;
+}
+
+.time_info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.time_start {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #241A5E;
+}
+
+.time_left {
+    width: 15vw;
+    font-size: 3rem;
+    border-radius: 25px;
+    margin: 1vh 0;
+    text-align: center;
+    background: #FEF1B0;
+    color: #331CC4;
+}
+
+.remove_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

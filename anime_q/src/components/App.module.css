@@ -6,6 +6,8 @@ html, body {
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
+
+    box-sizing: border-box;
 }
 
 .wrapper {
@@ -15,6 +17,6 @@ html, body {
 }
 
 .content {
-    margin-top: 7rem;
+    margin-top: 4%;
     flex: 1 0 auto;
 }
