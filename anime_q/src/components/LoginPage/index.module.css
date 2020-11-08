@@ -1,0 +1,19 @@
+.login_form {
+    margin: 10vh 30vw;
+    background: #CEC8EE;
+    height: 50vh;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputs p{
+    font-size: 2rem;
+    color: #331CC3;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}

@@ -1,0 +1,17 @@
+.input {
+    outline: none;
+    height: 6vh;
+    font-size: 1rem;
+    padding: 0 1vh;
+
+    border-radius: 10px;
+    background: #E5E1FF
+}
+
+.input.error {
+    border: 1px solid red;
+}
+
+.input:hover {
+    background: #edeafd;
+}
