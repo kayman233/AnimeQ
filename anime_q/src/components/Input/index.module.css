@@ -1,11 +1,11 @@
 .input {
     outline: none;
-    height: 6vh;
+    height: 30px;
     font-size: 1rem;
-    padding: 0 1vh;
+    padding: 0 10px;
 
     border-radius: 10px;
-    background: #E5E1FF
+    background: #E5E1FF;
 }
 
 .input.error {

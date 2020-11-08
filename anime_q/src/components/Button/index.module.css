@@ -1,6 +1,6 @@
 .button {
-    height: 5vh;
-    width: 10vw;
+    height: 35px;
+    width: 150px;
 
     border-radius: 25px;
     border: none;
@@ -12,12 +12,13 @@
     align-items: center;
     justify-content: center;
 
-    font-family: Josefin Sans;
+    font-family: Josefin Sans, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 1.4rem;
 
     color: #331CC3;
+    outline: none;
 }
 
 .button:hover {

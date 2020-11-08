@@ -8,30 +8,47 @@ import LoginPage from './LoginPage/index.js'
 import styles from './App.module.css'
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
-function App() {
-    let isLogged = false;
-    var page;
-    if (isLogged) {
-        page = <MainPage/>;
-    } else {
-        page = <ExplorePage/>;
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLogged: false,
+            user: null
+        };
+
+        this.changeIsLogged = this.changeIsLogged.bind(this);
     }
-    return (
-    <BrowserRouter>
-        <div className={styles.wrapper}>
-            <Header isLogged={isLogged}/>
-            <div className={styles.content}>
-                <Switch>
-                    <Route path="/login"><LoginPage/></Route>
-                    <Route path="/register"><RegisterPage/></Route>
-                    <Route path="/explore"><ExplorePage isLogged={isLogged}/></Route>
-                    <Route path="*">{page}</Route>
-                </Switch>
-            </div>
-            <Footer/>
-        </div>
-    </BrowserRouter>
-    )
+
+    changeIsLogged(isLogged) {
+        console.log("change", isLogged)
+        this.setState({isLogged});
+    }
+
+    render() {
+        return (
+            <BrowserRouter>
+                <div className={styles.wrapper}>
+                    <Header isLogged={this.state.isLogged} loginHandler={this.changeIsLogged}/>
+                    <div className={styles.content}>
+                        <Switch>
+                            <Route path="/login">{this.state.isLogged ?
+                                                <Redirect to="/" /> :
+                                                <LoginPage loginHandler={this.changeIsLogged}/>}
+                            </Route>
+                            <Route path="/register"><RegisterPage/></Route>
+                            <Route path="/explore"><ExplorePage isLogged={this.state.isLogged}/></Route>
+                            <Route path="*">{this.state.isLogged ?
+                                                <MainPage /> :
+                                                <ExplorePage isLogged={this.state.isLogged}/>}
+                            </Route>
+                        </Switch>
+                    </div>
+                    <Footer/>
+                </div>
+            </BrowserRouter>
+        )
+    }
 }
 
 export default App;

@@ -1,8 +1,9 @@
 .profile_menu {
-    margin-right: 1vw;
+    margin-right: 10px;
 }
 
 .profile {
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -11,22 +12,24 @@
 
 .profile:after {
     content: "\f107";
-    font-family: FontAwesome;
+    font-family: FontAwesome, serif;
 }
 
 .profile_name {
+    margin: 0;
+    font-size: 20px;
     right: 0;
 }
 
 .avatar {
-    margin: 0 1vw;
-    width: 5vh;
-    height: 5vh;
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
 .submenu {
-    padding: 1vw;
+    padding: 5px;
     list-style: none;
     margin: 0;
     border-radius: 0 0 25px 25px;
@@ -35,7 +38,7 @@
     right: 0;
     visibility: hidden;
     opacity: 0;
-    width: 3vw;
+    width: 50px;
     transform: scaleY(0);
     transform-origin: 0 0;
     transition: .3s ease-in-out;

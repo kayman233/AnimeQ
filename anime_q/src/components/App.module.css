@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     height: 100%;
 
-    font-family: Josefin Sans;
+    font-family: Josefin Sans, serif;
     font-style: normal;
     font-weight: normal;
 
@@ -17,6 +17,6 @@ html, body {
 }
 
 .content {
-    margin-top: 4%;
+    margin-top: 55px;
     flex: 1 0 auto;
 }

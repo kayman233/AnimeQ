@@ -11,8 +11,10 @@ function Profile(props) {
                 <img className={styles.avatar} src="https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png" alt='profile'/>
             </div>
             <ul className={styles.submenu}>
-                <li><img className={styles.img} src="https://img.icons8.com/material/48/000000/export--v1.png"/></li>
-                <li><img className={styles.img} src="https://img.icons8.com/material-rounded/48/000000/settings.png"/></li>
+                <li><img className={styles.img}
+                         src="https://img.icons8.com/material/48/000000/export--v1.png"
+                         onClick={event => {event.preventDefault(); props.loginHandler(false)}}
+                         alt="logout"/></li>
             </ul>
         </div>
     )
