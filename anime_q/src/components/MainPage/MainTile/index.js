@@ -2,8 +2,21 @@ import React from 'react';
 import styles from './index.module.css'
 
 function Tile(props) {
-    // подсчет времени
+    console.log("proccessTile");
     const anime_info = props.info;
+    console.log("proccessTile");
+    console.log(anime_info);
+    const anime_date = new Date();
+    const daysDiff = "5 days";
+    /*const current_date = new Date();
+    const anime_date = new Date(anime_info.date.year,
+                                anime_info.date.month,
+                                anime_info.date.day,
+                                anime_info.date.hour,
+                                anime_info.date.minute);
+    const timeDiff = anime_date.getDate() - current_date.getDate();
+    const daysDiff = timeDiff / (1000 * 3600 * 24);
+    */
     return (
         <div className={styles.tile}>
             <div className={styles.anime_info}>
@@ -12,7 +25,7 @@ function Tile(props) {
                     <h2 className={styles.anime_name}>
                         {anime_info.name}
                     </h2>
-                    <span class={styles.episode_num}>
+                    <span className={styles.episode_num}>
                         {anime_info.nextEp}th episode
                     </span>
                     <div className={styles.views}>
@@ -28,13 +41,13 @@ function Tile(props) {
                     Starts in
                 </p>
                 <p className={styles.time_left}>
-                    {anime_info.date} hours
+                    5 days
                 </p>
                 <p className={styles.time}>
-                    13.06.2020 {anime_info.date}am
+                    13.06.2000
                 </p>
             </div>
-            <div className={styles.remove_button}></div>
+            <div className={styles.remove_button}/>
         </div>
     )
 }

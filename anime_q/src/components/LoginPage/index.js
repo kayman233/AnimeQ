@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './index.module.css'
 import Button from '../Button/index.js'
 import Input from '../Input/index.js'
+import {loginAction} from "../../actions/user";
+import {connect} from 'react-redux'
 
 class LoginPage extends React.Component{
     constructor(props) {
@@ -25,7 +27,9 @@ class LoginPage extends React.Component{
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.loginHandler(true);
+        this.props.login(this.state.email, this.state.password).then((data) =>{
+            console.log(data);
+        });
     }
 
     render() {
@@ -43,4 +47,10 @@ class LoginPage extends React.Component{
     }
 }
 
-export default LoginPage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (...args) => dispatch(loginAction(...args))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(LoginPage);

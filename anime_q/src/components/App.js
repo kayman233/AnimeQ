@@ -1,54 +1,62 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+
+import {connect, Provider} from 'react-redux'
+import {currentUserAction} from "../actions/user";
+
 import Header from './Header/index.js'
 import Footer from './Footer/index.js'
 import MainPage from './MainPage/index.js'
 import ExplorePage from './ExplorePage/index.js'
 import RegisterPage from './RegisterPage/index.js'
 import LoginPage from './LoginPage/index.js'
+
 import styles from './App.module.css'
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+function App(props) {
+    useEffect(() => {
+        props.fetchUser()
+    }, []);
 
-        this.state = {
-            isLogged: false,
-            user: null
-        };
+    const isLogged = props.user !== null;
 
-        this.changeIsLogged = this.changeIsLogged.bind(this);
-    }
-
-    changeIsLogged(isLogged) {
-        console.log("change", isLogged)
-        this.setState({isLogged});
-    }
-
-    render() {
-        return (
-            <BrowserRouter>
-                <div className={styles.wrapper}>
-                    <Header isLogged={this.state.isLogged} loginHandler={this.changeIsLogged}/>
-                    <div className={styles.content}>
-                        <Switch>
-                            <Route path="/login">{this.state.isLogged ?
-                                                <Redirect to="/" /> :
-                                                <LoginPage loginHandler={this.changeIsLogged}/>}
-                            </Route>
-                            <Route path="/register"><RegisterPage/></Route>
-                            <Route path="/explore"><ExplorePage isLogged={this.state.isLogged}/></Route>
-                            <Route path="*">{this.state.isLogged ?
-                                                <MainPage /> :
-                                                <ExplorePage isLogged={this.state.isLogged}/>}
-                            </Route>
-                        </Switch>
-                    </div>
-                    <Footer/>
+    return (
+        <BrowserRouter>
+            <div className={styles.wrapper}>
+                <Header/>
+                <div className={styles.content}>
+                    <Switch>
+                        <Route path="/login">{isLogged ?
+                                            <Redirect to="/" /> :
+                                            <LoginPage/>}
+                        </Route>
+                        <Route path="/register"><RegisterPage/></Route>
+                        <Route path="*">{isLogged ?
+                            <MainPage /> : <LoginPage/>}
+                        </Route>
+                    </Switch>
                 </div>
-            </BrowserRouter>
-        )
-    }
+                <Footer/>
+            </div>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+/*
+*
+*                         <Route path="/explore"><ExplorePage/></Route>
+
+* */
+
+const mapStateToProps = function(state) {
+    return { user: state.user.user }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchUser: () => dispatch(currentUserAction())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

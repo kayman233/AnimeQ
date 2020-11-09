@@ -1,9 +1,17 @@
 import React from 'react';
 import styles from './index.module.css'
+import {connect} from "react-redux";
+import {logoutAction} from "../../../actions/user";
 
 function Profile(props) {
-    console.log(props);
-    const name = props.name;
+    const name = props.user.nickname;
+
+    const logout = () => {
+        props.logout().then(()=>{
+            console.log("logout");
+        })
+    }
+
     return (
         <div className={styles.profile_menu}>
             <div className={styles.profile}>
@@ -13,11 +21,21 @@ function Profile(props) {
             <ul className={styles.submenu}>
                 <li><img className={styles.img}
                          src="https://img.icons8.com/material/48/000000/export--v1.png"
-                         onClick={event => {event.preventDefault(); props.loginHandler(false)}}
+                         onClick={event => {event.preventDefault(); logout()}}
                          alt="logout"/></li>
             </ul>
         </div>
     )
 }
 
-export default Profile;
+const mapStateToProps = function(state) {
+    return { user: state.user.user }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: (...args) => dispatch(logoutAction(...args))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

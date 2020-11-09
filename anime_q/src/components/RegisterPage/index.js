@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './index.module.css'
 import Button from '../Button/index.js'
 import Input from '../Input/index.js'
+import {signupAction} from "../../actions/user";
+import {connect} from 'react-redux'
 
 class RegisterPage extends React.Component{
     constructor(props) {
@@ -26,6 +28,13 @@ class RegisterPage extends React.Component{
 
     handleSubmit(event) {
         event.preventDefault();
+        this.props.signup(
+            this.state.email,
+            this.state.login,
+            this.state.password).then( () => {
+                console.log('1');
+            }
+        );
     }
 
     render() {
@@ -46,4 +55,10 @@ class RegisterPage extends React.Component{
     }
 }
 
-export default RegisterPage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signup: (...args) => dispatch(signupAction(...args))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(RegisterPage);
