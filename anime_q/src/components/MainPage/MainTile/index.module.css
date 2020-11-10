@@ -1,97 +1,134 @@
 .tile {
-    height: 27vh;
-    background: #bfbadb;
+    margin-top: 20px;
+
+    height: 230px;
+    width: 1100px;
+
     border-radius: 25px;
-    margin-top: 3vh;
-    width: 72vw;
+    background: #bfbadb;
 
     display: flex;
 }
 
-.anime_info {
-    width: 50%;
+.animeInfo {
+    width: 800px;
     display: flex;
     align-items: center;
-}
-
-.anime_img {
-    width: 7vw;
-    height: 20vh;
-    border: 3px solid #331CC4;
-    border-radius: 5px;
-    margin: 0 2vw;
-}
-
-.anime_description {
-    height: 20vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-.anime_name {
-    font-size: 2rem;
-    margin: 0;
-    color: #241A5E;
-}
-
-.episode_num {
-    font-size: 1.5rem;
-    color: #4729FF;
 }
 
 .views {
     display: flex;
     align-items: center;
+    flex-direction: column;
+    margin-left: 40px;
 }
 
 .rank {
-    height: 3.5vw;
-    width: 3.5vw;
-    background:#FEF1B0;
+    height: 80px;
+    width: 80px;
+
+    background: #FEF1B0;
     border-radius: 50%;
-    font-size: 1.5rem;
+    font-size: 24px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.rank_text {
+.animeImg {
+    width: 150px;
+    height: 200px;
+    margin: 0 50px;
+
+    border: 3px solid #331CC4;
+    border-radius: 5px;
+}
+
+.rankText {
     text-align: center;
-    font-size: .5rem;
+    font-size: 10px;
 }
 
-.watching_text {
-    margin-left: 0.5vw;
+.watchingText {
+    font-size: 13px;
+    margin-top: 10px;
 }
 
-.time_info {
-    width: 50%;
+.animeDescription {
+    height: 200px;
+    width: 400px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.time_start {
+.animeName {
+    margin: 0;
+    font-size: 40px;
+    color: #241A5E;
+}
+
+.episodeNum {
     font-size: 1.5rem;
+    color: #4729FF;
+}
+
+.timeInfo {
+    width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.timeStart {
+    font-size: 30px;
     margin: 0;
     color: #241A5E;
 }
 
-.time_left {
-    width: 15vw;
-    font-size: 3rem;
+.timeLeft {
+    height: 50px;
+    width: 250px;
+
     border-radius: 25px;
-    margin: 1vh 0;
-    text-align: center;
+    margin: 10px 0;
+
     background: #FEF1B0;
     color: #331CC4;
+    font-size: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.remove_button {
-    position: absolute;
-    top: 0;
-    right: 0;
+.time {
+    font-size: 16px;
+}
+
+.removeButton {
+    width: 30px;
+    height: 30px;
+
+    top: 10px;
+    right: 15px;
+    border-radius: 50%;
+
+    background: #F45D5D;
+    position: relative;
+}
+
+.removeButton:hover {
+    background: #f17070;
+}
+
+.removeButton:active {
+    background: #F45D5D;
+    transform: scale(0.95);
 }

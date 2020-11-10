@@ -3,8 +3,7 @@ import styles from './index.module.css'
 import LoggedNav from './LoggedNav/index.js'
 import UnloggedNav from './UnloggedNav/index.js'
 import { useHistory } from "react-router-dom";
-import {currentUserAction} from "../../actions/user";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 function Header(props) {
     const history = useHistory();

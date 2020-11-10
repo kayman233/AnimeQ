@@ -1,4 +1,3 @@
-import http from '../utils/query'
 import query from "../utils/query";
 
 const UserService = {

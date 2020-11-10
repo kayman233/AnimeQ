@@ -1,18 +1,28 @@
 import React from 'react';
-import styles from './index.module.css'
-import Tile from './ExploreTile/index.js'
-import {userAnimesAction} from "../../actions/page";
+import styles from './index.module.css';
+import Tile from './ExploreTile/index.js';
 import {connect} from "react-redux";
+import {allAnimesAction, userAnimesAction} from "../../actions/page";
+import {currentUserAction} from "../../actions/user";
 
-function ExplorePage(props) {
-    console.log(animes)
-    return (
-        <div className={styles.user_queue}>
-            {animes.map(anime => {
-                return <Tile info={anime}/>
-            })}
-        </div>
-    )
+class ExplorePage extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillMount() {
+        this.props.fetchUser().then(() => {
+            this.props.getAllAnimes().then(()=> {});
+        })
+    }
+
+    render() {
+        return (
+            <div className={styles.userQueue}>
+                { this.props.animes.map(anime => <Tile key={anime.id} info={anime}/>) }
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = function(state) {
@@ -22,7 +32,9 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUserAnimes: (...args) => dispatch(userAnimesAction(...args))
+        getAllAnimes: (...args) => dispatch(allAnimesAction(...args)),
+        getUserAnimes: (...args) => dispatch(userAnimesAction(...args)),
+        fetchUser: () => dispatch(currentUserAction())
     }
 };
 

@@ -31,15 +31,14 @@ export function loginAction(login, password) {
       dispatch(fetchSuccess(data))
     })
       .catch((error) => {
-        console.log(error);
         dispatch(fetchFail(error))
       })
   }
 }
 
-export function signupAction(login, password) {
+export function signupAction(email, login, password) {
   return dispatch => {
-    return userService.signup(login, password).then((data) => {
+    return userService.signup(email, login, password).then((data) => {
       dispatch(fetchSuccess(data))
     })
       .catch((error) => {

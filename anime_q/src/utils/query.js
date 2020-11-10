@@ -1,117 +1,36 @@
-const animes = {
-    '1': {
-        id: 1,
-        name: 'Jujutsu Kaisen',
-        viewers: 1,
-        rank: 1,
-        episodes: 24,
-        nextEp: 2,
-        studio: 'MAPPA',
-        tags: [
-            'action',
-            'horror',
-            'school'
-        ],
-        description: '',
-        date: {
-            year: 2020,
-            month: 11,
-            day: 13,
-            hour: 12,
-            minute: 0
-        },
-        img: 'https://cdn.myanimelist.net/images/anime/1171/109222.jpg'
-    },
-    '2': {
-        id: 2,
-        name: 'Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka III',
-        viewers: 0,
-        rank: 3,
-        episodes: 12,
-        nextEp: 3,
-        studio: 'J.C.Staff',
-        tags: [
-            'action',
-            'comedy',
-            'fantasy'
-        ],
-        description: '',
-        date: {
-            year: 2020,
-            month: 11,
-            day: 16,
-            hour: 12,
-            minute: 0
-        },
-        img: 'https://cdn.myanimelist.net/images/anime/1523/108380.jpg'
-    },
-    '3': {
-        id: 3,
-        name: 'Haikyuu!!: To the Top 2nd Season',
-        viewers: 1,
-        rank: 3,
-        episodes: 12,
-        nextEp: 4,
-        studio: 'Production I.G',
-        tags: [
-            'sports',
-            'schounen',
-            'school'
-        ],
-        description: '',
-        date: {
-            year: 2020,
-            month: 11,
-            day: 21,
-            hour: 12,
-            minute: 0
-        },
-        img: 'https://cdn.myanimelist.net/images/anime/1453/106768.jpg'
-    }
-}
-
-const users = {
-    'vanyakudr007@mail.ru': {
-            email: 'vanyakudr007@mail.ru',
-            nickname: 'kayman',
-            password: '12345',
-            animeIds: [1]
-    },
-    'kudriavtsev.iv@phystech.edu': {
-            email: 'kudriavtsev.iv@phystech.edu',
-            nickname: 'ivankudr',
-            password: 'qwerty',
-            animeIds: []
-    }
-}
-
-const currentUserObj = {
-    user: null
-}
-
 const query = {
     signup(email, login, password) {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
         return new Promise(function (resolve, reject) {
             if (users.hasOwnProperty(email)) {
+                localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
                 reject("This email already exists");
             } else {
                 users[email] = {
+                    email: email,
                     nickname: login,
                     password: password,
                     animeIds: []
                 };
-                resolve();
+                localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
+                resolve(null);
             }
         });
     },
     login(email, password) {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
         return new Promise(function (resolve, reject) {
             if (!users.hasOwnProperty(email)) {
+                localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
                 reject("This email doesn't exist");
             } else {
                 const user = users[email];
                 const actualPassword = user.password;
                 if(password === actualPassword) {
+                    currentUserObj.user = user;
+                    localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
                     resolve(user);
                 } else {
                     reject("Wrong password");
@@ -120,38 +39,100 @@ const query = {
         });
     },
     logout() {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
         return new Promise(function (resolve, reject) {
             currentUserObj.user = null;
+            Object.values(animes).map((anime) => {
+                if (anime.hasOwnProperty("added")) {
+                    delete anime["added"]
+                }
+                return anime;
+            });
+            localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
             resolve();
         });
     },
     currentUser() {
+        console.log("current user");
+        console.log(JSON.parse(localStorage.getItem('data')));
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
         return new Promise(function (resolve, reject) {
+            localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
             resolve(currentUserObj.user);
         });
     },
     userAnimes(userEmail) {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
         return new Promise(function (resolve, reject) {
             const user = users[userEmail];
-            console.log("user");
-            console.log(user);
             const userAnimesIds = user.animeIds;
-            console.log("userAnimesIds");
-            console.log(userAnimesIds);
             const userAnimes = userAnimesIds.map((animeId) => {
-                console.log("animeId");
-                console.log(animeId);
-                console.log(animes[animeId]);
                 return animes[animeId];
             });
-            console.log("userAnimes");
-            console.log(userAnimes);
+            localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
             resolve(userAnimes);
         });
     },
     allAnimes() {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
         return new Promise(function (resolve, reject) {
-            resolve(animes);
+            const user = currentUserObj.user;
+            if (user !== null) {
+                const userAnimesIds = user.animeIds;
+                const animesUser = Object.values(animes).map((anime) => {
+                    if (userAnimesIds.includes(anime.id)) {
+                        anime["added"] = true;
+                    }
+                    return anime;
+                });
+                localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
+                resolve(animesUser);
+            } else {
+                localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
+                resolve(Object.values(animes));
+            }
+        });
+    },
+    deleteAnimeFromUserList(animeId) {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
+        return new Promise(function (resolve, reject) {
+            const user = currentUserObj.user;
+            const email = user.email;
+
+            users[email].animeIds = users[email].animeIds.filter((item) => item !== animeId);
+            delete animes[animeId]["added"];
+            const userAnimesIds = currentUserObj.user.animeIds;
+            const userAnimes = userAnimesIds.map((animeId) => {
+                return animes[animeId];
+            });
+
+            currentUserObj.user = users[email];
+            localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
+            resolve(userAnimes);
+        });
+    },
+    addAnimeToUserList(animeId) {
+        const storage = JSON.parse(localStorage.getItem('data'));
+        const {animes, users, currentUserObj} = storage.animes;
+        return new Promise(function (resolve, reject) {
+            const user = currentUserObj.user;
+            const email = user.email;
+
+            users[email].animeIds.push(animeId)
+            animes[animeId]["added"] = true;
+            const userAnimesIds = currentUserObj.user.animeIds;
+            const userAnimes = userAnimesIds.map((animeId) => {
+                return animes[animeId];
+            });
+
+            currentUserObj.user = users[email];
+            localStorage.setItem('data', JSON.stringify({animes, users, currentUserObj}));
+            resolve(userAnimes);
         });
     }
 }

@@ -1,55 +1,80 @@
 import React from 'react';
 import styles from './index.module.css'
+import { deleteAnimeAction } from "../../../actions/page";
+import { connect } from "react-redux";
 
-function Tile(props) {
-    console.log("proccessTile");
-    const anime_info = props.info;
-    console.log("proccessTile");
-    console.log(anime_info);
-    const anime_date = new Date();
-    const daysDiff = "5 days";
-    /*const current_date = new Date();
-    const anime_date = new Date(anime_info.date.year,
-                                anime_info.date.month,
-                                anime_info.date.day,
-                                anime_info.date.hour,
-                                anime_info.date.minute);
-    const timeDiff = anime_date.getDate() - current_date.getDate();
-    const daysDiff = timeDiff / (1000 * 3600 * 24);
-    */
-    return (
-        <div className={styles.tile}>
-            <div className={styles.anime_info}>
-                <img className={styles.anime_img}></img>
-                <div className={styles.anime_description}>
-                    <h2 className={styles.anime_name}>
-                        {anime_info.name}
-                    </h2>
-                    <span className={styles.episode_num}>
-                        {anime_info.nextEp}th episode
-                    </span>
+class Tile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            animeInfo: props.info
+        }
+    }
+
+    componentWillMount() {
+        this.render();
+    }
+    
+    deleteTile() {
+        this.props.delete(this.state.animeInfo.id);
+    }
+
+    valueNth(value) {
+        if (value > 3 && value < 21) return value + 'th';
+        switch (value % 10) {
+            case 1:  return value + "st";
+            case 2:  return value + "nd";
+            case 3:  return value + "rd";
+            default: return value + "th";
+        }
+    }
+    
+    render() {
+        return (
+            <div className={styles.tile}>
+                <div className={styles.animeInfo}>
                     <div className={styles.views}>
-                        <span className={styles.rank}>{anime_info.rank}st<br/>
-                            <span className={styles.rank_text}>most<br/>popular</span>
+                        <span className={styles.rank}>{this.valueNth(this.state.animeInfo.rank)}<br/>
+                            <span className={styles.rankText}>most<br/>popular</span>
                         </span>
-                        <span className={styles.watching_text}>{anime_info.viewers} watching</span>
+                        <span className={styles.watchingText}>{this.state.animeInfo.viewers} watching</span>
+                    </div>
+                    <img className={styles.animeImg} src={this.state.animeInfo.img} alt={this.state.animeInfo.name}/>
+                    <div className={styles.animeDescription}>
+                        <h2 className={styles.animeName}>
+                            {this.state.animeInfo.name}
+                        </h2>
+                        <span className={styles.episodeNum}>
+                            {this.valueNth(this.state.animeInfo.nextEp)} episode
+                        </span>
                     </div>
                 </div>
+                <div className={styles.timeInfo}>
+                    <p className={styles.timeStart}>
+                        Starts in
+                    </p>
+                    <p className={styles.timeLeft}>
+                        {this.state.animeInfo.timeToShow}
+                    </p>
+                    <p className={styles.time}>
+                        {this.state.animeInfo.date}
+                    </p>
+                </div>
+                <button className={styles.removeButton} onClick={ () => {this.deleteTile()} }/>
             </div>
-            <div className={styles.time_info}>
-                <p className={styles.time_start}>
-                    Starts in
-                </p>
-                <p className={styles.time_left}>
-                    5 days
-                </p>
-                <p className={styles.time}>
-                    13.06.2000
-                </p>
-            </div>
-            <div className={styles.remove_button}/>
-        </div>
-    )
+        )
+    }
 }
 
-export default Tile;
+const mapStateToProps = function(state) {
+    return { user: state.user.user,
+             animes: state.animes.animes }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        delete: (...args) => dispatch(deleteAnimeAction(...args))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tile);

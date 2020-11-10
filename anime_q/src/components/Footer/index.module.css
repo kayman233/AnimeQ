@@ -1,12 +1,13 @@
 .footer {
     width: 100%;
     height: 20px;
-    display: flex;
-    align-items: center;
+
     margin-top: 20px;
 
-    font-size: 15px;
-
-    background: #CFC8FF;
+    display: flex;
+    align-items: center;
     flex-shrink: 0;
+
+    font-size: 15px;
+    background: #CFC8FF;
 }

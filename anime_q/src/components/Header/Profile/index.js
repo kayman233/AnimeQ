@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.css'
-import {connect} from "react-redux";
-import {logoutAction} from "../../../actions/user";
+import { connect } from "react-redux";
+import { logoutAction } from "../../../actions/user";
 
 function Profile(props) {
     const name = props.user.nickname;
@@ -13,10 +13,12 @@ function Profile(props) {
     }
 
     return (
-        <div className={styles.profile_menu}>
+        <div className={styles.profileMenu}>
             <div className={styles.profile}>
-                <p className={styles.profile_name} title={name}>{name}</p>
-                <img className={styles.avatar} src="https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png" alt='profile'/>
+                <p className={styles.profileName} title={name}>{name}</p>
+                <img className={styles.avatar}
+                     src="https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png"
+                     alt='profile'/>
             </div>
             <ul className={styles.submenu}>
                 <li><img className={styles.img}

@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
-import {connect, Provider} from 'react-redux'
-import {currentUserAction} from "../actions/user";
+import { connect } from 'react-redux'
+import { currentUserAction } from "../actions/user";
 
 import Header from './Header/index.js'
 import Footer from './Footer/index.js'
@@ -17,7 +17,7 @@ import styles from './App.module.css'
 function App(props) {
     useEffect(() => {
         props.fetchUser()
-    }, []);
+    }, [props]);
 
     const isLogged = props.user !== null;
 
@@ -32,8 +32,9 @@ function App(props) {
                                             <LoginPage/>}
                         </Route>
                         <Route path="/register"><RegisterPage/></Route>
+                        <Route path="/explore"><ExplorePage/></Route>
                         <Route path="*">{isLogged ?
-                            <MainPage /> : <LoginPage/>}
+                            <MainPage /> : <ExplorePage/>}
                         </Route>
                     </Switch>
                 </div>
@@ -42,12 +43,6 @@ function App(props) {
         </BrowserRouter>
     )
 }
-
-/*
-*
-*                         <Route path="/explore"><ExplorePage/></Route>
-
-* */
 
 const mapStateToProps = function(state) {
     return { user: state.user.user }

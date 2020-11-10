@@ -1,8 +1,9 @@
-.login_form {
-    margin: 100px auto;
+.loginForm {
     width: 500px;
-    background: #CEC8EE;
     height: 400px;
+    margin: 100px auto;
+
+    background: #CEC8EE;
     border-radius: 25px;
 
     display: flex;
@@ -12,9 +13,9 @@
 }
 
 .inputs {
+    width: 380px;
     display: block;
     margin: 0 auto;
-    width: 380px;
 }
 
 .inputs p{
@@ -22,4 +23,12 @@
     color: #331CC3;
     float: right;
     margin: 20px 0;
+}
+
+.error {
+    color: red;
+}
+
+.done {
+    color: green;
 }

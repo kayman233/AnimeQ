@@ -1,7 +1,7 @@
-const initialState = {
-  error: false,
-  user: null
-};
+const initialState = localStorage.getItem('reduxState')
+    ? JSON.parse(localStorage.getItem('reduxState')).animes
+    : { error: false,
+        user: null }
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -11,7 +11,6 @@ const userReducer = (state = initialState, action) => {
         error: action.payload
       };
     case 'USER_SUCCESS':
-      console.log(state);
       return {
         ...state,
         error: null,

@@ -1,7 +1,7 @@
-const initialState = {
-    animes: [],
-    error: null
-};
+const initialState = localStorage.getItem('reduxState')
+    ? JSON.parse(localStorage.getItem('reduxState')).animes
+    : { animes: [],
+        error: null }
 
 const pageReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -11,15 +11,9 @@ const pageReducer = (state = initialState, action) => {
                 error: action.payload
             };
         case 'PAGE_SUCCESS':
-            console.log("payload");
-            console.log(action.payload);
-            console.log("concat");
-            console.log(action.payload.concat(...state.animes));
-            console.log("state");
-            console.log(state);
             return {
                 ...state,
-                animes: action.payload.concat(...state.animes)
+                animes: action.payload
             };
         default:
             return state;

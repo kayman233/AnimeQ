@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './index.module.css'
 import Button from '../Button/index.js'
 import Input from '../Input/index.js'
-import {signupAction} from "../../actions/user";
-import {connect} from 'react-redux'
+import { signupAction } from "../../actions/user";
+import { connect } from 'react-redux'
 
 class RegisterPage extends React.Component{
     constructor(props) {
@@ -13,6 +13,8 @@ class RegisterPage extends React.Component{
             email: '',
             login: '',
             password: '',
+            errorText: '',
+            doneText: ''
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,6 +22,10 @@ class RegisterPage extends React.Component{
     }
 
     handleInputChange(event) {
+        this.setState({
+            errorText: '',
+            doneText: ''
+        });
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -32,14 +38,22 @@ class RegisterPage extends React.Component{
             this.state.email,
             this.state.login,
             this.state.password).then( () => {
-                console.log('1');
+                if (this.props.error !== null) {
+                    this.setState({
+                        errorText: this.props.error
+                    });
+                } else {
+                    this.setState({
+                        doneText: "Registration done"
+                    });
+                }
             }
         );
     }
 
     render() {
         return (
-            <form className={styles.login_form}>
+            <form className={styles.loginForm}>
                 <div className={styles.inputs}>
                     <p>Email: <Input name="email" type="email" placeholder="Email"
                                      onChange={this.handleInputChange} value={this.state.email}/></p>
@@ -50,9 +64,19 @@ class RegisterPage extends React.Component{
                 </div>
 
                 <Button onClick={this.handleSubmit}>Register</Button>
+                <div className={styles.error}>
+                    {this.state.errorText}
+                </div>
+                <div className={styles.done}>
+                    {this.state.doneText}
+                </div>
             </form>
         )
     }
+}
+
+const mapStateToProps = function(state) {
+    return { error: state.user.error }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -61,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(RegisterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

@@ -8,8 +8,6 @@ function fetchFail(payload) {
 }
 
 function fetchSuccess(payload) {
-    console.log("payloadFetch");
-    console.log(payload);
     return {
         type: 'PAGE_SUCCESS',
         payload
@@ -17,12 +15,8 @@ function fetchSuccess(payload) {
 }
 
 export function userAnimesAction(userEmail) {
-    console.log("action");
-    console.log(userEmail);
     return dispatch => {
         return pageService.userAnimes(userEmail).then((data) => {
-            console.log("data");
-            console.log(data);
             dispatch(fetchSuccess(data))
         })
             .catch((error) => {
@@ -34,6 +28,28 @@ export function userAnimesAction(userEmail) {
 export function allAnimesAction() {
     return dispatch => {
         return pageService.allAnimes().then((data) => {
+            dispatch(fetchSuccess(data))
+        })
+            .catch((error) => {
+                dispatch(fetchFail(error))
+            })
+    }
+}
+
+export function deleteAnimeAction(animeId) {
+    return dispatch => {
+        return pageService.deleteAnimeFromUserList(animeId).then((data) => {
+            dispatch(fetchSuccess(data))
+        })
+            .catch((error) => {
+                dispatch(fetchFail(error))
+            })
+    }
+}
+
+export function addAnimeAction(animeId) {
+    return dispatch => {
+        return pageService.addAnimeToUserList(animeId).then((data) => {
             dispatch(fetchSuccess(data))
         })
             .catch((error) => {
