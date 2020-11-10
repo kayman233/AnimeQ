@@ -9,12 +9,11 @@ class Tile extends React.Component {
         this.state = {
             animeInfo: props.info
         }
+
+        this.deleteTile = this.deleteTile.bind(this);
+        this.valueNth = this.valueNth.bind(this);
     }
 
-    componentWillMount() {
-        this.render();
-    }
-    
     deleteTile() {
         this.props.delete(this.state.animeInfo.id);
     }
@@ -30,22 +29,28 @@ class Tile extends React.Component {
     }
     
     render() {
+        const animeInfo = this.state.animeInfo;
         return (
             <div className={styles.tile}>
                 <div className={styles.animeInfo}>
                     <div className={styles.views}>
-                        <span className={styles.rank}>{this.valueNth(this.state.animeInfo.rank)}<br/>
-                            <span className={styles.rankText}>most<br/>popular</span>
-                        </span>
-                        <span className={styles.watchingText}>{this.state.animeInfo.viewers} watching</span>
+                        <div className={styles.rank}>
+                            {this.valueNth(animeInfo.rank)}<br/>
+                            <div
+                                className={styles.rankText}>most<br/>popular
+                            </div>
+                        </div>
+                        <div className={styles.watchingText}>
+                            {animeInfo.viewers} watching
+                        </div>
                     </div>
-                    <img className={styles.animeImg} src={this.state.animeInfo.img} alt={this.state.animeInfo.name}/>
+                    <img className={styles.animeImg} src={animeInfo.img} alt={animeInfo.name}/>
                     <div className={styles.animeDescription}>
-                        <h2 className={styles.animeName}>
-                            {this.state.animeInfo.name}
+                        <h2 className={styles.animeName} title={animeInfo.name}>
+                            {animeInfo.name}
                         </h2>
                         <span className={styles.episodeNum}>
-                            {this.valueNth(this.state.animeInfo.nextEp)} episode
+                            {this.valueNth(animeInfo.nextEp)} episode
                         </span>
                     </div>
                 </div>
@@ -54,10 +59,10 @@ class Tile extends React.Component {
                         Starts in
                     </p>
                     <p className={styles.timeLeft}>
-                        {this.state.animeInfo.timeToShow}
+                        {animeInfo.timeToShow}
                     </p>
                     <p className={styles.time}>
-                        {this.state.animeInfo.date}
+                        {animeInfo.date}
                     </p>
                 </div>
                 <button className={styles.removeButton} onClick={ () => {this.deleteTile()} }/>
@@ -68,7 +73,7 @@ class Tile extends React.Component {
 
 const mapStateToProps = function(state) {
     return { user: state.user.user,
-             animes: state.animes.animes }
+             animes: state.page.animes }
 }
 
 const mapDispatchToProps = (dispatch) => {

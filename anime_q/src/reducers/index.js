@@ -5,7 +5,7 @@ import pageReducer from './page';
 
 const rootReducer = combineReducers({
   user: userReducer,
-  animes: pageReducer
+  page: pageReducer
 });
 
 export default rootReducer

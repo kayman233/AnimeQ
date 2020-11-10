@@ -33,6 +33,10 @@ class RegisterPage extends React.Component{
     }
 
     handleSubmit(event) {
+        this.setState({
+            errorText: '',
+            doneText: ''
+        });
         event.preventDefault();
         this.props.signup(
             this.state.email,
@@ -40,10 +44,16 @@ class RegisterPage extends React.Component{
             this.state.password).then( () => {
                 if (this.props.error !== null) {
                     this.setState({
+                        email: '',
+                        login: '',
+                        password: '',
                         errorText: this.props.error
                     });
                 } else {
                     this.setState({
+                        email: '',
+                        login: '',
+                        password: '',
                         doneText: "Registration done"
                     });
                 }

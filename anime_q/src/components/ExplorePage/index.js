@@ -6,28 +6,24 @@ import {allAnimesAction, userAnimesAction} from "../../actions/page";
 import {currentUserAction} from "../../actions/user";
 
 class ExplorePage extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchUser().then(() => {
             this.props.getAllAnimes().then(()=> {});
         })
     }
 
     render() {
-        return (
+        return this.props.animes ? (
             <div className={styles.userQueue}>
                 { this.props.animes.map(anime => <Tile key={anime.id} info={anime}/>) }
             </div>
-        )
+        ) : null;
     }
 }
 
 const mapStateToProps = function(state) {
     return { user: state.user.user,
-             animes: state.animes.animes }
+             animes: state.page.animes }
 }
 
 const mapDispatchToProps = (dispatch) => {

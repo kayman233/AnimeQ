@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.module.css';
-import {addAnimeAction, allAnimesAction, deleteAnimeAction} from "../../../actions/page";
+import { addAnimeAction, allAnimesAction, deleteAnimeAction } from "../../../actions/page";
 import { connect } from "react-redux";
 
 class Tile extends React.Component {
@@ -9,10 +9,9 @@ class Tile extends React.Component {
         this.state = {
             animeInfo: props.info
         }
-    }
 
-    componentWillMount() {
-        this.render();
+        this.processClick = this.processClick.bind(this);
+        this.valueNth = this.valueNth.bind(this);
     }
 
     processClick() {
@@ -39,34 +38,40 @@ class Tile extends React.Component {
             default: return value + "th";
         }
     }
+
     render() {
+        const animeInfo = this.state.animeInfo;
         return (
             <div className={styles.tile}>
                 <div className={styles.animeInfo}>
                     <div className={styles.views}>
-                    <span className={styles.rank}>{this.valueNth(this.state.animeInfo.rank)}<br/>
-                        <span className={styles.rankText}>most<br/>popular</span>
-                    </span>
-                        <span className={styles.watchingText}>{this.state.animeInfo.viewers} watching</span>
+                    <div className={styles.rank}>{this.valueNth(animeInfo.rank)}<br/>
+                        <div className={styles.rankText}>
+                            most<br/>popular
+                        </div>
                     </div>
-                    <img className={styles.animeImg} alt={this.state.animeInfo.name} src={this.state.animeInfo.img}/>
+                    <div
+                        className={styles.watchingText}>{animeInfo.viewers} watching
+                    </div>
+                    </div>
+                    <img className={styles.animeImg} alt={animeInfo.name} src={animeInfo.img}/>
                     <div className={styles.animeDescriptionWrapper}>
-                        <h2 className={styles.animeName}>
-                            {this.state.animeInfo.name}
+                        <h2 className={styles.animeName} title={animeInfo.name}>
+                            {animeInfo.name}
                         </h2>
                         <div className={styles.animeMainInfo}>
                             <div className={styles.animeDescription}>
-                                {this.state.animeInfo.description}
+                                {animeInfo.description}
                             </div>
                             <div className={styles.additionalInfo}>
                                 <p className={styles.episodes}>
-                                    Episodes: {this.state.animeInfo.episodes}
+                                    Episodes: {animeInfo.episodes}
                                 </p>
                                 <p className={styles.studio}>
-                                    Studio: {this.state.animeInfo.studio}
+                                    Studio: {animeInfo.studio}
                                 </p>
                                 <div className={styles.tags}>
-                                    {this.state.animeInfo.tags.map(tag => {
+                                    {animeInfo.tags.map(tag => {
                                         return <span className={styles.tag}>{tag}</span>
                                     })}
                                 </div>
@@ -76,13 +81,13 @@ class Tile extends React.Component {
                 </div>
                 <div className={styles.timeInfo}>
                     <div className={styles.addRemove} onClick={()=>{this.processClick()}}>
-                        {this.state.animeInfo.hasOwnProperty("added") ? "-" : "+"}
+                        {animeInfo.hasOwnProperty("added") ? "-" : "+"}
                     </div>
                     <p className={styles.timeStart}>
                         Next episode on
                     </p>
                     <p className={styles.time}>
-                        {this.state.animeInfo.date}
+                        {animeInfo.date}
                     </p>
                 </div>
             </div>
@@ -92,7 +97,7 @@ class Tile extends React.Component {
 
 const mapStateToProps = function(state) {
     return { user: state.user.user,
-             animes: state.animes.animes }
+             animes: state.page.animes }
 }
 
 const mapDispatchToProps = (dispatch) => {

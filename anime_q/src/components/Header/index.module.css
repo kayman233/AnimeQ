@@ -4,7 +4,7 @@
     width: 100%;
     min-width: 1300px;
 
-    position: fixed;
+    position: sticky;
     left: 0;
     top: 0;
 

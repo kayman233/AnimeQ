@@ -5,22 +5,22 @@ import { connect } from "react-redux";
 import { userAnimesAction } from "../../actions/page";
 
 class MainPage extends React.Component{
-    componentWillMount() {
+    componentDidMount() {
         this.props.getUserAnimes(this.props.user.email).then(()=> {});
     }
 
     render() {
-        return (
+        return this.props.animes ? (
             <div className={styles.user_queue}>
                 { this.props.animes.map(anime => <Tile key={anime.id} info={anime}/>) }
             </div>
-        )
+        ) : null;
     }
 }
 
 const mapStateToProps = function(state) {
     return { user: state.user.user,
-             animes: state.animes.animes }
+             animes: state.page.animes }
 }
 
 const mapDispatchToProps = (dispatch) => {

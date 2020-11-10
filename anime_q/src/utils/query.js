@@ -77,6 +77,9 @@ const currentUserObj = {
 const query = {
     signup(email, login, password) {
         return new Promise(function (resolve, reject) {
+            if (email === '' || login === '' || password === '') {
+                reject("Fill all inputs");
+            }
             if (users.hasOwnProperty(email)) {
                 reject("This email already exists");
             } else {
