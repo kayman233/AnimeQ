@@ -1,7 +1,7 @@
-const initialState = localStorage.getItem('reduxState')
-    ? JSON.parse(localStorage.getItem('reduxState')).animes
-    : { error: false,
-        user: null }
+const initialState = {
+  error: false,
+  user: null
+};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {

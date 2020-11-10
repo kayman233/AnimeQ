@@ -1,7 +1,7 @@
-const initialState = localStorage.getItem('reduxState')
-    ? JSON.parse(localStorage.getItem('reduxState')).animes
-    : { animes: [],
-        error: null }
+const initialState = {
+    animes: [],
+    error: null
+};
 
 const pageReducer = (state = initialState, action) => {
     switch (action.type) {
