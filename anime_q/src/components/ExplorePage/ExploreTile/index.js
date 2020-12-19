@@ -7,7 +7,7 @@ class Tile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            animeInfo: props.info
+            animeInfo: props.info,
         }
 
         this.processClick = this.processClick.bind(this);
@@ -16,21 +16,17 @@ class Tile extends React.Component {
 
     processClick() {
         if (this.props.user !== null) {
-            if (this.state.animeInfo.hasOwnProperty("added")) {
-                this.props.delete(this.state.animeInfo.id).then(() => {
-                    this.props.getAllAnimes().then(()=> {});
-                });
+            this.state.hasUser = !this.state.hasUser;
+            if (this.props.userAnimes.includes(this.state.animeInfo.id)) {
+                this.props.delete(this.state.animeInfo.id).then(() => {});
             } else {
-                this.props.add(this.state.animeInfo.id).then(() => {
-                    this.props.getAllAnimes().then(()=> {});
-                });
+                this.props.add(this.state.animeInfo.id).then(() => {});
             }
         }
-
     }
 
     valueNth(value) {
-        if (value > 3 && value < 21) return 'th';
+        if (value > 3 && value < 21) return value + 'th';
         switch (value % 10) {
             case 1:  return value + "st";
             case 2:  return value + "nd";
@@ -39,13 +35,19 @@ class Tile extends React.Component {
         }
     }
 
+    dateAsString(date) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        return date.toLocaleDateString("en-US", options);
+    }
+
     render() {
         const animeInfo = this.state.animeInfo;
+        const date = new Date(animeInfo.nextEpDate);
         return (
             <div className={styles.tile}>
                 <div className={styles.animeInfo}>
                     <div className={styles.views}>
-                    <div className={styles.rank}>{this.valueNth(animeInfo.rank)}<br/>
+                    <div className={styles.rank}>{this.valueNth(this.props.rank)}<br/>
                         <div className={styles.rankText}>
                             most<br/>popular
                         </div>
@@ -54,10 +56,10 @@ class Tile extends React.Component {
                         className={styles.watchingText}>{animeInfo.viewers} watching
                     </div>
                     </div>
-                    <img className={styles.animeImg} alt={animeInfo.name} src={animeInfo.img}/>
+                    <img className={styles.animeImg} alt={animeInfo.animeName} src={animeInfo.img}/>
                     <div className={styles.animeDescriptionWrapper}>
-                        <h2 className={styles.animeName} title={animeInfo.name}>
-                            {animeInfo.name}
+                        <h2 className={styles.animeName} title={animeInfo.animeName}>
+                            {animeInfo.animeName}
                         </h2>
                         <div className={styles.animeMainInfo}>
                             <div className={styles.animeDescription}>
@@ -71,7 +73,7 @@ class Tile extends React.Component {
                                     Studio: {animeInfo.studio}
                                 </p>
                                 <div className={styles.tags}>
-                                    {animeInfo.tags.map(tag => {
+                                    {animeInfo.tags.split('/').map(tag => {
                                         return <span className={styles.tag}>{tag}</span>
                                     })}
                                 </div>
@@ -81,13 +83,13 @@ class Tile extends React.Component {
                 </div>
                 <div className={styles.timeInfo}>
                     <div className={styles.addRemove} onClick={()=>{this.processClick()}}>
-                        {animeInfo.hasOwnProperty("added") ? "-" : "+"}
+                        {this.props.hasUser ? "-" : "+"}
                     </div>
                     <p className={styles.timeStart}>
                         Next episode on
                     </p>
                     <p className={styles.time}>
-                        {animeInfo.date}
+                        {this.dateAsString(date)}
                     </p>
                 </div>
             </div>
@@ -97,7 +99,9 @@ class Tile extends React.Component {
 
 const mapStateToProps = function(state) {
     return { user: state.user.user,
-             animes: state.page.animes }
+             animes: state.page.animes,
+             userAnimes: state.page.userAnimes
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {

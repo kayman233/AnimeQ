@@ -25,10 +25,11 @@ export function currentUserAction() {
   }
 }
 
-export function loginAction(login, password) {
+export function loginAction(username, password) {
   return dispatch => {
-    return userService.login(login, password).then((data) => {
-      dispatch(fetchSuccess(data))
+    return userService.login(username, password).then((data) => {
+      dispatch(fetchSuccess(data));
+      userService.setCurrentUser(username).then(() => {});
     })
       .catch((error) => {
         dispatch(fetchFail(error))

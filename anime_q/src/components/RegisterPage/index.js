@@ -43,11 +43,12 @@ class RegisterPage extends React.Component{
             this.state.login,
             this.state.password).then( () => {
                 if (this.props.error !== null) {
+                    console.log(this.props.error, 'error');
                     this.setState({
                         email: '',
                         login: '',
                         password: '',
-                        errorText: this.props.error
+                        errorText: this.props.error.response.data.message
                     });
                 } else {
                     this.setState({

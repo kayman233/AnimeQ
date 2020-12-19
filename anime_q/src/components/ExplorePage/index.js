@@ -6,16 +6,21 @@ import {allAnimesAction, userAnimesAction} from "../../actions/page";
 import {currentUserAction} from "../../actions/user";
 
 class ExplorePage extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         this.props.fetchUser().then(() => {
             this.props.getAllAnimes().then(()=> {});
-        })
+        });
     }
 
     render() {
         return this.props.animes ? (
             <div className={styles.userQueue}>
-                { this.props.animes.map(anime => <Tile key={anime.id} info={anime}/>) }
+                { this.props.animes.map((anime, index) => <Tile key={anime.id} info={anime} rank={index + 1}
+                                                       hasUser={this.props.userAnimes.includes(anime.id)}/>) }
             </div>
         ) : null;
     }
@@ -23,7 +28,8 @@ class ExplorePage extends React.Component{
 
 const mapStateToProps = function(state) {
     return { user: state.user.user,
-             animes: state.page.animes }
+             animes: state.page.animes,
+             userAnimes: state.page.userAnimes}
 }
 
 const mapDispatchToProps = (dispatch) => {

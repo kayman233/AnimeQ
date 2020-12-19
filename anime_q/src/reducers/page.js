@@ -1,5 +1,6 @@
 const initialState = {
     animes: [],
+    userAnimes: [],
     error: null
 };
 
@@ -13,7 +14,12 @@ const pageReducer = (state = initialState, action) => {
         case 'PAGE_SUCCESS':
             return {
                 ...state,
-                animes: action.payload
+                animes: action.payload.data
+            };
+        case 'USER_PAGE_SUCCESS':
+            return {
+                ...state,
+                userAnimes: action.payload.data
             };
         default:
             return state;

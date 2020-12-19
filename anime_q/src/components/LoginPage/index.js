@@ -4,13 +4,14 @@ import Button from '../Button/index.js'
 import Input from '../Input/index.js'
 import { loginAction } from "../../actions/user";
 import { connect } from 'react-redux'
+import {clearAnimes} from "../../actions/page";
 
 class LoginPage extends React.Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            email: '',
+            username: '',
             password: '',
             errorText: ''
         }
@@ -31,22 +32,26 @@ class LoginPage extends React.Component{
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.login(this.state.email, this.state.password)
-            .then(() =>{
-                if (this.props.error !== null) {
-                    this.setState({
-                        errorText: this.props.error
-                    });
-                }
-            })
+        this.props.clearAnimes().then(() => {
+            this.props.login(this.state.username, this.state.password)
+                .then(() =>{
+                    if (this.props.error !== null) {
+                        this.setState({
+                            errorText: this.props.error.response.data.message
+                        });
+                    } else {
+
+                    }
+                })
+        });
     }
 
     render() {
         return (
             <form className={styles.loginForm}>
                 <div className={styles.inputs}>
-                    <p>Email: <Input name="email" type="email" placeholder="Login"
-                                     onChange={this.handleInputChange} value={this.state.email}/></p>
+                    <p>Login: <Input name="username" type="text" placeholder="Login"
+                                     onChange={this.handleInputChange} value={this.state.username}/></p>
                     <p>Password: <Input name="password" type="password" placeholder="Password"
                                         onChange={this.handleInputChange} value={this.state.password}/></p>
                 </div>
@@ -63,7 +68,8 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: (...args) => dispatch(loginAction(...args))
+        login: (...args) => dispatch(loginAction(...args)),
+        clearAnimes: (...args) => dispatch(clearAnimes(...args))
     }
 };
 

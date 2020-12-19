@@ -1,8 +1,8 @@
 import query from "../utils/query";
 
 const PageService = {
-  userAnimes(userEmail) {
-    return query.userAnimes(userEmail);
+  userAnimes(username) {
+    return query.userAnimes(username);
   },
   allAnimes() {
     return query.allAnimes();
@@ -12,6 +12,9 @@ const PageService = {
   },
   addAnimeToUserList(animeId) {
     return query.addAnimeToUserList(animeId);
+  },
+  clearAnimes() {
+    return query.clearAnimes();
   }
 };
 

@@ -4,14 +4,17 @@ const UserService = {
   signup(email, login, password) {
     return query.signup(email, login, password);
   },
-  login(email, password) {
-    return query.login(email, password);
+  login(username, password) {
+    return query.login(username, password);
   },
   logout() {
     return query.logout();
   },
   currentUser() {
     return query.currentUser();
+  },
+  setCurrentUser(username) {
+    return query.setCurrentUser(username);
   }
 };
 

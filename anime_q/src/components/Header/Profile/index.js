@@ -2,13 +2,14 @@ import React from 'react';
 import styles from './index.module.css'
 import { connect } from "react-redux";
 import { logoutAction } from "../../../actions/user";
+import {allAnimesAction, clearAnimes} from "../../../actions/page";
 
 function Profile(props) {
-    const name = props.user.nickname;
+    const name = props.user.username;
 
     const logout = () => {
         props.logout().then(()=>{
-            console.log("logout");
+            props.clear().then(()=> {});
         })
     }
 
@@ -36,7 +37,9 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logout: (...args) => dispatch(logoutAction(...args))
+        logout: (...args) => dispatch(logoutAction(...args)),
+        clear: (...args) => dispatch(clearAnimes(...args)),
+        getAllAnimes: (...args) => dispatch(allAnimesAction(...args)),
     }
 };
 
